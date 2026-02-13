@@ -126,3 +126,55 @@
     @apply bg-background text-foreground;
   }
 }
+
+.dark {
+  background-color: black;
+  color: white;
+}
+.light {
+  background-color: white;
+  color: black;
+}
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.transition {
+  transition: ease-in-out;
+  transition-duration: 0.3s;
+}
+.DVDshelf {
+  width: 100%;
+}
+@media (min-width: 400px) {
+  h1 {
+    font-size: 12px;
+  }
+  .DVDshelf {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    padding: 5px;
+    gap: 5px
+  }
+}
+@media (min-width) {
+  .DVDshelf {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    padding: 10px;
+  }
+}
+@media (min-width: 1200px) {
+  .DVDshelf {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    padding: 40px;
+    gap: 10px;
+  }
+  .banner {
+    padding: 80px;
+  }
+  .bannerTitle {
+    font-size: 40px;
+  }
+}

@@ -54,7 +54,7 @@ export const Shelf = <T,>({ title, category }: ShelfProps<T>) => {
         </div>
 
         {/*DVDcards section comes here ->. */}
-        <div className="DVDshelf w-full p-[4rem] gap-[2rem] grid grid-cols-5 grid-rows-2">
+        <div className="DVDshelf">
           {dvds.slice(0, visibleCount).map((dvd, i) => (
             <DVDcard
               id={dvd.id}

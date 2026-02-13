@@ -6,6 +6,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { DVDcard } from "./dvdcard";
 import { Button } from "@/components/ui/button";
 import { MovieTypes } from "./movietypes";
+import { Search } from "lucide-react";
 export const SearchSection = () => {
   const [value, setValue] = useState(""); // what user types
   const [query, setQuery] = useState(""); // actual search term
@@ -63,7 +64,7 @@ export const SearchSection = () => {
   }
 
   return (
-    <>
+    <div className="w-1/3 flex flex-row gap-2">
       <Input
         value={value}
         onChange={(e) => {
@@ -80,7 +81,7 @@ export const SearchSection = () => {
         placeholder="Search movies..."
       />
 
-      <Button onClick={runSearch}>Search</Button>
+      <Button onClick={runSearch} variant={"ghost"}><Search/></Button>
       {showResult && (
         <div
           style={{
@@ -110,7 +111,7 @@ export const SearchSection = () => {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 };
 export default SearchSection;
