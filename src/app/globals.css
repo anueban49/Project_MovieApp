@@ -2,6 +2,14 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+body {
+  max-width: 2000px;
+  margin: 0 auto;
+}
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -145,7 +153,8 @@
 .DVDshelf {
   width: 100%;
 }
-@media (min-width: 400px) {
+
+@media (min-width: 375px) {
   h1 {
     font-size: 12px;
   }
@@ -153,28 +162,26 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     padding: 5px;
-    gap: 5px
+    gap: 5px;
   }
 }
-@media (min-width) {
-  .DVDshelf {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-    padding: 10px;
-  }
-}
-@media (min-width: 1200px) {
+
+@media (min-width: 700px) {
   .DVDshelf {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     padding: 40px;
     gap: 10px;
   }
-  .banner {
-    padding: 80px;
-  }
+
   .bannerTitle {
     font-size: 40px;
   }
+  .banner {
+    width: 50%;
+    gap: 1.5em;
+  }
+}
+.banner {
+  margin: 5px 5%;
 }

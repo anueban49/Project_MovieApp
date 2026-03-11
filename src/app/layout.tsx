@@ -8,6 +8,8 @@ const geistSans = Geist({
   subsets: ["latin"],
 });
 
+const initialScale = 2000
+
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],

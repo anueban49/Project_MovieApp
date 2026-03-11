@@ -8,7 +8,7 @@ export const Header = () => {
   const { theme, toggleTheme } = useTheme();
 
   return (
-    <div
+    <header
       className={`ease-in-out duration-300 w-full h-20 flex flex-row justify-between gap-6 items-center p-4 ${theme === "dark" ? "dark" : "light"}`}
     >
       <LogoRouter />
@@ -30,6 +30,6 @@ export const Header = () => {
           </>
         )}
       </Button>
-    </div>
+    </header>
   );
 };

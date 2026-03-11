@@ -9,7 +9,12 @@ import {
 } from "@/components/ui/carousel";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogTrigger, DialogContent, DialogDescription } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogDescription,
+} from "@/components/ui/dialog";
 import { VideoPlayer } from "./VideoPlayer";
 export type VideoTypes = {
   id: string;
@@ -84,7 +89,7 @@ export const NowPlaying = () => {
     }
   };
   return (
-    <Carousel className="w-full aspect-12/5 overflow-x-scroll scrollbar-hide relative p-0 m-0 pl-0">
+    <Carousel className="w-full max-w-500 aspect-12/5 overflow-x-scroll scrollbar-hide relative p-0 m-0 pl-0">
       <CarouselContent className="flex scrollbar-none">
         {loading ? (
           <>
@@ -101,19 +106,23 @@ export const NowPlaying = () => {
               return (
                 <CarouselItem
                   key={el.id}
-                  className="w-full aspect-12/5 bg-cover bg-center bg-no-repeat overflow-hidden "
+                  className="w-full  aspect-12/5 bg-cover bg-center bg-no-repeat overflow-hidden "
                   style={{
                     backgroundImage: `url(${process.env.TMDB_IMAGE_SERVICE_URL}/original${el.backdrop_path})`,
                   }}
                 >
-                  <div className="banner w-1/2 flex flex-col align-center justify-center gap-5">
-                    <p className="promoTitle text-white">Now Playing:</p>
-                    <h1 className="bannerTitle text-white font-bold">
-                      {el.title}
-                    </h1>
-                    <h2 style={{ color: "white" }}>
-                      {el.popularity?.toFixed(0) + " votes"}
-                    </h2>
+                  <div className="banner h-full flex flex-col items-start justify-center ">
+                    <div>
+                      {" "}
+                      <p className="promoTitle text-white">Now Playing:</p>
+                      <h1 className="bannerTitle text-white font-bold">
+                        {el.title}
+                      </h1>{" "}
+                      <h2 style={{ color: "white" }}>
+                        {el.popularity?.toFixed(0) + " votes"}
+                      </h2>
+                    </div>
+
                     <p style={{ color: "white", display: "flex", gap: "5px" }}>
                       <Star style={{ color: "yellow", fill: "yellow" }} />
                       {el.vote_average.toFixed(1)}/10
@@ -130,15 +139,20 @@ export const NowPlaying = () => {
                             }
                           }}
                           variant="outline"
-                          className="w-[10em] scale-125"
+                          className="w-[10em] "
                         >
                           <Play />
                           Play Trailer
                         </Button>
                       </DialogTrigger>
                       <DialogContent className="w-1/2 aspect-video">
-                        <DialogDescription className="text-black">{video?.name}</DialogDescription>
-                        <VideoPlayer title={video?.name as string} videoKey={video?.key as string} />
+                        <DialogDescription className="text-black">
+                          {video?.name}
+                        </DialogDescription>
+                        <VideoPlayer
+                          title={video?.name as string}
+                          videoKey={video?.key as string}
+                        />
                       </DialogContent>
                     </Dialog>
                   </div>
