@@ -21,12 +21,15 @@ type DVDcardProps = {
 export const DVDcard = (props: DVDcardProps) => {
   const router = useRouter();
   const { theme } = useTheme();
+
+  const starIcon = theme === "dark" ? "white" : "yellow";
+
   return (
     <>
       <Card
-        className={`aspect-23/44 rounded-[1em] overflow-hidden bg-gray-200 p-0 border-none ${theme === "dark" ? "bg-zinc-900 text-white" : "light"}`}
+        className={`aspect-23/44 rounded-[1em] overflow-hidden bg-gray-200 p-0 gap-0 border-none ${theme === "dark" ? "bg-zinc-900 text-white" : "light"}`}
         onClick={() => {
-          router.push(`/moviedynamic/moviedetails/${props.id}`);
+          router.push(`/moviedetails/${props.id}`);
         }}
         // onClick={() => {console.log(props.id)}}
       >
@@ -35,21 +38,12 @@ export const DVDcard = (props: DVDcardProps) => {
           style={{ backgroundImage: `url(${props.poster_path})` }}
         ></div>
         <div className="flex flex-col" style={{ padding: "3%", gap: "3%" }}>
-          <div>
-            <Star style={{ color: "yellow", fill: "yellow" }} />
+          <div className={`flex gap-2`}>
+            <Star style={{ color: starIcon, fill: starIcon }} />
             {props?.vote_average.toFixed(1)}/10
           </div>
 
-          <p
-            style={{
-              color: "black",
-              fontSize: "2rem",
-              lineHeight: "1",
-              fontWeight: "200",
-            }}
-          >
-            {props?.title}
-          </p>
+          <p>{props?.title}</p>
         </div>
       </Card>
     </>

@@ -38,7 +38,7 @@ export const Shelf = <T,>({ title, category }: ShelfProps<T>) => {
     <>
       <div className="xl:px-14 xl:justify-center">
         <div className="flex items-center justify-between p-4">
-          <h1 className="p-4" style={{ fontWeight: "500", fontSize: "2em" }}>
+          <h1 className={`shelflabel`} >
             {title}
           </h1>
           {visibleCount < dvds.length && (

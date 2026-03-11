@@ -181,6 +181,10 @@ body {
     width: 50%;
     gap: 1.5em;
   }
+  .shelflabel {
+    font-size: 24px;
+    font-weight: 600;
+  }
 }
 .banner {
   margin: 5px 5%;
