@@ -7,7 +7,7 @@
   margin: 0;
 }
 body {
-  max-width: 2000px;
+  max-width: 2500px;
   margin: 0 auto;
 }
 @custom-variant dark (&:is(.dark *));
@@ -121,7 +121,7 @@ body {
   --sidebar-accent: oklch(0.269 0 0);
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  --sidebar-ring: oklch(43.002% 0.16032 27.311);
 }
 
 @layer base {
@@ -134,14 +134,22 @@ body {
     @apply bg-background text-foreground;
   }
 }
-
+.italic {
+  font-style: italic;
+}
 .dark {
   background-color: black;
   color: white;
+  .searchcards {
+    background-color: rgba(0, 0, 0, 0.601);
+  }
 }
 .light {
   background-color: white;
   color: black;
+  .searchcards {
+    background-color: rgba(255, 255, 255, 0.601);
+  }
 }
 .no-scrollbar {
   scrollbar-width: none;
@@ -150,8 +158,8 @@ body {
   transition: ease-in-out;
   transition-duration: 0.3s;
 }
-.DVDshelf {
-  width: 100%;
+.searchScreen {
+  margin: 0 auto;
 }
 
 @media (min-width: 375px) {
@@ -171,7 +179,7 @@ body {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     padding: 40px;
-    gap: 10px;
+    gap: 2%;
   }
 
   .bannerTitle {

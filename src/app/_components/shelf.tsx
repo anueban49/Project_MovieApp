@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { MovieTypes } from "./movietypes";
 import { DVDcard } from "./dvdcard";
+import { useTheme } from "../Providers/ThemeContext";
 type ShelfProps<T> = {
   title: string;
   category: string;
@@ -11,7 +12,7 @@ export const Shelf = <T,>({ title, category }: ShelfProps<T>) => {
   const router = useRouter();
   const [visibleCount, setVisibleCount] = useState(10);
   const [dvds, setDvds] = useState<MovieTypes[]>([]);
-
+  const { theme } = useTheme();
   useEffect(() => {
     const dataFetch = async () => {
       try {
@@ -22,7 +23,7 @@ export const Shelf = <T,>({ title, category }: ShelfProps<T>) => {
               accept: "application/json",
               Authorization: `Bearer ${process.env.API_KEY}`,
             },
-          }
+          },
         );
         const data = await res.json();
         setDvds(data.results);
@@ -36,14 +37,13 @@ export const Shelf = <T,>({ title, category }: ShelfProps<T>) => {
 
   return (
     <>
-      <div className="xl:px-14 xl:justify-center">
+      <div className="w-full max-w-450">
         <div className="flex items-center justify-between p-4">
-          <h1 className={`shelflabel`} >
-            {title}
-          </h1>
+          <h1 className={`shelflabel`}>{title}</h1>
           {visibleCount < dvds.length && (
             <Button
-              className="bg-transparent text-black w-30 text-[1.5em]"
+              variant={"link"}
+              className={`bg-transparent text-black w-30 text-[1em] hover:text-blue-500 ${theme === "dark" ? "text-white" : ""}`}
               onClick={() => {
                 router.push(`/categories/${category}`);
               }}
@@ -57,7 +57,7 @@ export const Shelf = <T,>({ title, category }: ShelfProps<T>) => {
         <div className="DVDshelf">
           {dvds.slice(0, visibleCount).map((dvd, i) => (
             <DVDcard
-              id={dvd.id}
+              id={dvd.id as number}
               key={i}
               title={dvd.title}
               overview={dvd.overview}

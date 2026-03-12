@@ -9,7 +9,7 @@ export type Genre = {
 
 import { useTheme } from "../Providers/ThemeContext";
 import { Header } from "./Header";
-import { Footer } from "react-day-picker";
+import { Footer } from "./Footer";
 
 // todos: implement search algorithm and genre function
 export const BaseStructure = ({ children }: BaseStructureType) => {

@@ -27,10 +27,12 @@ const genrePage = () => {
   const [results, setResults] = useState<MovieTypes[]>([]);
   const searchparams = useSearchParams();
   const genreIds = searchparams.get("genreIds")?.split(",") || [];
-
+  const [loading, setLoading] = useState(false);
+  const [selected, setSelected] = useState<string[]>([]);
   useEffect(() => {
     const fetchGenres = async () => {
       try {
+        setLoading(true);
         const res = await fetch(
           `${process.env.TMDB_BASE_URL}/genre/movie/list?language=en`,
           {
@@ -45,8 +47,10 @@ const genrePage = () => {
         }
         const data = await res.json();
         setGenres(data.genres);
+        setLoading(false);
       } catch (error) {
         console.log(error);
+        setLoading(false);
       }
     };
     fetchGenres();
@@ -67,6 +71,7 @@ const genrePage = () => {
         if (!res.ok) {
           console.log("res not ok");
         }
+
         setResults(data.results);
         setTotalPage(results.length);
       } catch (error) {
@@ -81,10 +86,11 @@ const genrePage = () => {
     const updatedGenreIds = genreIds?.includes(genreId)
       ? genreIds.filter((id) => id !== genreId)
       : [...genreIds, genreId];
-    console.log(updatedGenreIds);
+
     params.set("genreIds", updatedGenreIds.join(","));
     router.push(`?${params.toString()}`);
-    console.log(updatedGenreIds);
+
+    setSelected(updatedGenreIds);
   };
   const nextpage = () => {
     SetCurrentPage((prev) => prev + 1);
@@ -99,18 +105,14 @@ const genrePage = () => {
         style={{ width: "full", height: "fit-content" }}
         className="w-full h-vh px-[5em] py-[2em] flex flex-row"
       >
-        <div className="w-1/3">
-          {genres.map((genre, id) => (
+        <div className="w-1/3 flex flex-col gap-2 p-2 lg:p-5">
+          {genres.map((genre) => (
             <Button
-              style={{
-                padding: "2em, 0",
-                borderRadius: "2em",
-                fontSize: "1em",
-                fontWeight: "400",
-                scale: "0.8",
-              }}
               key={genre.id}
-              variant={"outline"}
+              variant={
+                selected.includes(genre.id.toString()) ? "default" : "outline"
+              }
+              className={`w-fit rounded-2xl`}
               // onClick={() => genreSelect(genre.name, genre.id)}
               onClick={() => {
                 handleClickgenre(genre.id.toString());
@@ -121,18 +123,33 @@ const genrePage = () => {
             </Button>
           ))}
         </div>
-        <div className="w-2/3 h-full grid grid-cols-4 grid-rows-3">
-          {results.slice(0, 12).map((el, id) => (
-            <DVDcard
-              key={id}
-              title={el.title}
-              overview={el.overview}
-              poster_path={`${process.env.TMDB_IMAGE_SERVICE_URL}/original${el.poster_path}`}
-              popularity={el.popularity}
-              genre_ids={el.genre_ids}
-              vote_average={el.vote_average}
-            ></DVDcard>
-          ))}
+        <div className="w-2/3 h-full grid grid-cols-4 grid-rows-3 gap-3">
+          {loading ? (
+            <p>Loading...</p>
+          ) : (
+            <>
+              {results.length !== 0 ? (
+                <>No movie found from this genre</>
+              ) : (
+                <>
+                
+                  {results.slice(0, 12).map((el, id) => (
+                    <DVDcard
+                      key={id}
+                      id={el.id}
+                      title={el.title}
+                      overview={el.overview}
+                      poster_path={`${process.env.TMDB_IMAGE_SERVICE_URL}/original${el.poster_path}`}
+                      popularity={el.popularity}
+                      genre_ids={el.genre_ids}
+                      vote_average={el.vote_average}
+                    
+                    ></DVDcard>
+                  ))}
+                </>
+              )}
+            </>
+          )}
         </div>
       </div>
       <Pagination className="w-full flex flex-row px-20 justify-end">

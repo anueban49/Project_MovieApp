@@ -7,14 +7,14 @@ import { title } from "process";
 import { Card } from "@/components/ui/card";
 import { useTheme } from "../Providers/ThemeContext";
 type DVDcardProps = {
-  id: number;
+  id?: number;
   title: string;
   overview: string;
   poster_path: string;
   popularity?: number;
   genre_ids?: number[];
   vote_average: number;
-  vote_count: number;
+  vote_count?: number;
 };
 
 //dynamic router that fetches api with dynamic param, used altogether with custom component.
@@ -27,7 +27,7 @@ export const DVDcard = (props: DVDcardProps) => {
   return (
     <>
       <Card
-        className={`aspect-23/44 rounded-[1em] overflow-hidden bg-gray-200 p-0 gap-0 border-none ${theme === "dark" ? "bg-zinc-900 text-white" : "light"}`}
+        className={`aspect-23/44 rounded-[1em] overflow-hidden bg-gray-200 p-0 gap-0 border-none ${theme === "dark" ? "bg-zinc-900 text-white" : "light"} hover:scale-102 duration-300`}
         onClick={() => {
           router.push(`/moviedetails/${props.id}`);
         }}
@@ -43,7 +43,7 @@ export const DVDcard = (props: DVDcardProps) => {
             {props?.vote_average.toFixed(1)}/10
           </div>
 
-          <p>{props?.title}</p>
+          <p className={`hover:cursor-pointer text-2xl `}>{props?.title}</p>
         </div>
       </Card>
     </>

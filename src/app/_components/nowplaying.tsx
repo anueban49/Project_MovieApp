@@ -89,7 +89,7 @@ export const NowPlaying = () => {
     }
   };
   return (
-    <Carousel className="w-full max-w-500 aspect-12/5 overflow-x-scroll scrollbar-hide relative p-0 m-0 pl-0">
+    <Carousel className="w-full aspect-12/5 overflow-x-scroll scrollbar-hide relative p-0 m-0 pl-0">
       <CarouselContent className="flex scrollbar-none">
         {loading ? (
           <>
@@ -129,8 +129,7 @@ export const NowPlaying = () => {
                     </p>
                     <p style={{ color: "white" }}>{el.overview}</p>
                     <Dialog>
-                      <DialogTrigger>
-                        {" "}
+                      <DialogTrigger asChild>
                         <Button
                           onClick={() => {
                             const movieId = el.id as string;
@@ -145,10 +144,8 @@ export const NowPlaying = () => {
                           Play Trailer
                         </Button>
                       </DialogTrigger>
-                      <DialogContent className="w-1/2 aspect-video">
-                        <DialogDescription className="text-black">
-                          {video?.name}
-                        </DialogDescription>
+                      <DialogContent className="w-full absolute top-[10%] p-0 aspect-16/9">
+                        <DialogDescription className="text-black"></DialogDescription>
                         <VideoPlayer
                           title={video?.name as string}
                           videoKey={video?.key as string}

@@ -7,37 +7,32 @@ import {
   SelectLabel,
   SelectItem,
 } from "@radix-ui/react-select";
-
-import { Input } from "@/components/ui/input";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useEffect, useState } from "react";
-import { Moon } from "lucide-react";
-import { Children } from "react";
-import { Label } from "@radix-ui/react-select";
-import {
-  Popover,
-  PopoverContent,
-  PopoverAnchor,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import { Genre } from "./BaseStructure";
 
-export const genreSection = () => {
+export const GenreSection = () => {
   const [genres, setGenres] = useState<Genre[]>([]);
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     const fetchGenres = async () => {
       try {
+        setLoading(true);
         const res = await fetch(
-          "https://api.themoviedb.org/3/genre/movie/list?language=en",
+          `${process.env.TMDB_BASE_URL}/genre/movie/list?language=en`,
           {
             headers: {
               accept: "application/json",
               Authorization: `Bearer ${process.env.API_KEY}`,
             },
-          }
+          },
         );
         const data = await res.json();
         setGenres(data.genres);
+        setLoading(false);
       } catch (error) {
         console.log(error);
+        setLoading(false);
       }
     };
     fetchGenres();
@@ -51,16 +46,22 @@ export const genreSection = () => {
         <SelectContent>
           <SelectGroup>
             <SelectLabel>Genres</SelectLabel>
-            {genres.map((genre: Genre) => (
-              <SelectItem key={genre.id} value={genre.name}>
-                {genre.name}
-              </SelectItem>
-            ))}
+            {loading ? (
+              <>Loading...</>
+            ) : (
+              <>
+                {genres.map((genre: Genre) => (
+                  <>
+                    <SelectItem key={genre.id} value={genre.name}>
+                      {genre.name}
+                    </SelectItem>
+                  </>
+                ))}
+              </>
+            )}
           </SelectGroup>
         </SelectContent>
       </Select>
-
-      
     </>
   );
 };

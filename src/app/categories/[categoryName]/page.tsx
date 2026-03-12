@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 type Response = {
   page: number;
-  results: Array<[]>;
+  results: MovieTypes[];
 };
 type CategorySectionProps = {
   categoryName: string;
@@ -60,6 +60,7 @@ const CategorySecton = () => {
       <div className="w-full px-10 py-4 gap-10 grid grid-cols-5 grid-rows-2">
         {datas.map((el, id) => (
           <DVDcard
+            id={el.id as number}
             key={el.id}
             title={el.title}
             overview={el.overview}
@@ -69,18 +70,18 @@ const CategorySecton = () => {
           />
         ))}
       </div>
-      <Pagination className="w-fit m-0">
+      <Pagination className="w-fit  self-end p-10">
         <PaginationContent>
           <PaginationItem>
-            <Button onClick={prevpage}>
+            <Button onClick={prevpage} size={"icon"} variant={"ghost"}>
               <ChevronLeft />
-              Prev
             </Button>
           </PaginationItem>
-          <PaginationItem>{totalpage}</PaginationItem>
+          <PaginationItem className="aspect-square p-2">
+            {totalpage}
+          </PaginationItem>
           <PaginationItem>
-            <Button onClick={nextpage}>
-              Next
+            <Button onClick={nextpage} size={"icon"} variant={"ghost"}>
               <ChevronRight />
             </Button>
           </PaginationItem>
