@@ -7,6 +7,8 @@ import { Button } from "@/components/ui/button";
 import { useSearchParams } from "next/navigation";
 import { DVDcard } from "@/app/_components/dvdcard";
 import { MovieTypes } from "@/app/_components/movietypes";
+import { Suspense } from "react";
+import { connection } from "next/server";
 import {
   Pagination,
   PaginationContent,
@@ -100,6 +102,7 @@ const genrePage = () => {
   };
 
   return (
+  
     <>
       <div
         style={{ width: "full", height: "fit-content" }}
@@ -132,7 +135,6 @@ const genrePage = () => {
                 <>No movie found from this genre</>
               ) : (
                 <>
-                
                   {results.slice(0, 12).map((el, id) => (
                     <DVDcard
                       key={id}
@@ -143,7 +145,6 @@ const genrePage = () => {
                       popularity={el.popularity}
                       genre_ids={el.genre_ids}
                       vote_average={el.vote_average}
-                    
                     ></DVDcard>
                   ))}
                 </>
