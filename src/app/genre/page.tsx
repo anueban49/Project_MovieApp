@@ -7,8 +7,7 @@ import { Button } from "@/components/ui/button";
 import { useSearchParams } from "next/navigation";
 import { DVDcard } from "@/app/_components/dvdcard";
 import { MovieTypes } from "@/app/_components/movietypes";
-import { Suspense } from "react";
-import { connection } from "next/server";
+
 import {
   Pagination,
   PaginationContent,
