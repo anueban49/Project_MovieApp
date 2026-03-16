@@ -110,6 +110,7 @@ const fetchJSON = async (url: any) => {
   return fetch(url, AUTH_HEADERS).then((res) => res.json());
 };
 const Moviedetails = ({ params }: Details) => {
+  const [loading, setLoading] = useState(false);
   const { movieId } = use(params);
   const [details, setDetails] = useState<DataTypes>();
   const [videos, setVideos] = useState<VideoTypes[]>([]);
@@ -120,9 +121,11 @@ const Moviedetails = ({ params }: Details) => {
   const [similar, setSimilar] = useState<DataTypes[]>([]);
   const { theme } = useTheme();
   const starIcon = theme === "dark" ? "white" : "yellow";
+
   const router = useRouter();
   useEffect(() => {
     const dataFetch = async () => {
+      setLoading(true);
       try {
         const [detailsRes, videoRes, peopleRes, similarRes] = await Promise.all(
           [
@@ -235,44 +238,46 @@ const Moviedetails = ({ params }: Details) => {
         <div className={`flex gap-2 `}>{details?.overview}</div>{" "}
         <div className={`lg:w-1/2  grid grid-cols-5 w-full gap-0`}>
           <p className={`font-medium col-span-1`}>Director</p>{" "}
-          <p className="col-span-4 flex gap-2">
+          <div className="col-span-4 flex gap-2">
             •
             {Array.isArray(director) ? (
               <>
-                {director.map((d) => (
-                  <p className="flex gap-2">{d.name} •</p>
+                {director.map((d, index) => (
+                  <p className="flex gap-2" key={index}>
+                    {d.name} •
+                  </p>
                 ))}
               </>
             ) : (
               <>{director.name}</>
             )}
-          </p>
+          </div>
           <p className={`font-medium col-span-1`}>Writer</p>{" "}
-          <p className="col-span-4 flex gap-2">
+          <div className="col-span-4 flex gap-2">
             •
             {Array.isArray(writer) ? (
               <>
-                {writer.map((d) => (
-                  <p> {d.name} •</p>
+                {writer.map((d, i) => (
+                  <p key={i}> {d.name} •</p>
                 ))}
               </>
             ) : (
               <>{writer.name}•</>
             )}
-          </p>
+          </div>
           <p className={`font-medium col-span-1`}>Star</p>
-          <p className="col-span-4 flex gap-2">
+          <div className="col-span-4 flex gap-2">
             •
             {Array.isArray(star) ? (
               <>
-                {star.map((d) => (
-                  <p>{d.name} •</p>
+                {star.map((d, i) => (
+                  <p key={i}>{d.name} •</p>
                 ))}
               </>
             ) : (
               <>{star.name} •</>
             )}
-          </p>
+          </div>
         </div>
         <div className={`self-start `}>
           <p className={`text-xl font-medium`}>More Like This</p>
@@ -282,6 +287,7 @@ const Moviedetails = ({ params }: Details) => {
             <CarouselContent className="gap-2 ">
               {similar.map((s) => (
                 <CarouselItem
+                  key={s.id}
                   onClick={() => {
                     router.push(`/moviedetails/${s.id}`);
                   }}

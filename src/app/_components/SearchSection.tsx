@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
-import {  useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 
@@ -11,13 +11,13 @@ import { Search, Star, StarIcon } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { useTheme } from "../Providers/ThemeContext";
 import { DataTypes } from "../moviedetails/[movieId]/page";
+
 export const SearchSection = () => {
   const [value, setValue] = useState(""); // what user types
   const [query, setQuery] = useState(""); // actual search term
   const [results, setResults] = useState<DataTypes[]>([]); // array of movies
   const [page, setPage] = useState(1);
   const [showResult, setShowResult] = useState(false);
-
 
   useEffect(() => {
     if (!query) return;
@@ -82,7 +82,7 @@ export const SearchSection = () => {
           setShowResult(true);
         }}
         onBlur={() => {
-          setShowResult(false);
+          setTimeout(() => setShowResult(false), 150);
         }}
         placeholder="Search movies..."
       />
@@ -100,6 +100,7 @@ export const SearchSection = () => {
                 key={index}
                 onClick={() => {
                   router.push(`/moviedetails/${movie.id}`);
+                  console.log(movie.id);
                 }}
                 style={{
                   backgroundImage: `url(${process.env.TMDB_IMAGE_SERVICE_URL}/original${movie.backdrop_path})`,
@@ -109,7 +110,6 @@ export const SearchSection = () => {
                 <div
                   className={` flex flex-col p-2 searchcards h-full backdrop-blur-2xl hover:backdrop-blur-none duration-200 hover:bg-none`}
                 >
-               
                   <p className="p-1 ">{movie.title}</p>
                   <div className="flex gap-1">
                     <Star
